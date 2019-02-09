@@ -81,21 +81,29 @@
 
 # Apache HTTP Serverのインストール
 1. 以下のコマンドを入力してApacheをインストール
+
 ```$ sudo sudo yum -y install httpd```
 
 2. 以下のコマンドを入力してApacheを起動
+
 ```$ sudo service httpd start```
 
 3. 以下のコマンドを入力してサーバー起動時にApacheも自動的に再起動するように設定
+
 ```$ sudo chkconfig httpd on```
 
 4. 以下のコマンドを入力する
+
 ```ps -ax | grep httpd```
+
 以下の行が表示されていればサーバー上でApacheが動作している
+
 ```12134 ? Ss 0:00 /user/sbin/httpd```
 
 6. 以下のコマンドでネットワークの待ち受け状態を確認
+
 ```sudo lsof -i -n -P```
+
 httpdの行にTCP *:80と表示されていることを確認
 
 # ファイアウォールの設定
@@ -162,6 +170,7 @@ httpdの行にTCP *:80と表示されていることを確認
 
 2. Tera TermでWebサーバーにログイン
 3. 以下のコマンドでDBサーバーにpingを実行
+
 ```$ ping 10.0.2.10```
 
 4. WEB-SGに1.と同じセキュリティグループを設定
@@ -172,9 +181,11 @@ httpdの行にTCP *:80と表示されていることを確認
 2. Fromに秘密鍵ファイルを選択、Toに~/を入力してSendをクリック
 3. Webサーバーのホームディレクトリに秘密鍵ファイルがコピーされていることを確認
 4. 以下のコマンドで秘密鍵ファイルのパーミッションを変更
+
 ```$ chmod 400 my-key.pem```
 
 5. 以下のコマンドでWebサーバーを踏み台にしてDBサーバーに接続
+
 ```$ ssh -i my-key.pem ec2-user@10.0.2.10```
 
 6. Are you sure you want to continue connecting (yes/no)? が表示されたらyesを入力
@@ -204,9 +215,11 @@ httpdの行にTCP *:80と表示されていることを確認
 # DBサーバーにMySQLをインストール
 1. Webサーバー経由でDBサーバーにSSH接続
 2. 以下のコマンドでMySQLをインストール
+
 ```$ sudo yum -y install mysql-server```
 
 3. インストールに失敗する場合は以下のコマンドを順に実行
+
 ```
 $ sudo yum remove mariadb-libs
 $ sudo rm -rf /var/lib/mysql/
@@ -215,6 +228,7 @@ $ sudo yum -y install mysql-server
 ```
 
 4. 以下のコマンドでMySQLの起動と初期設定を行う
+
 ```
 $ sudo service mysqld start
 $ sudo mysqladmin -u root password
@@ -223,15 +237,19 @@ Confirm new password: 同じパスワードを入力
 ```
 
 5. 以下のコマンドでMySQLに接続
+
 ```$ mysql -u root -p```
 
 6. 以下のコマンドでデータベースを作成
+
 ```mysql> CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;```
 
 7. wordpressユーザーを作成、パスワードはwordpresspasswdとする
+
 ```mysql> grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd';```
 
 エラーが出るときは以下のコマンドを実行
+
 ```
 $ mysql -u root -p
 mysql> flush privileges;
@@ -243,6 +261,7 @@ mysql> grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd'
 # WebサーバーにWordPressをインストール
 1. Webサーバーにログイン
 2. 以下のコマンドでPHPやMySQLのライブラリをインストール
+
 ```
 $ sudo yum -y install php php-mysql php-mbstring
 $ sudo yum -y install mysql
@@ -251,6 +270,7 @@ mysql> exit
 ```
 
 3. WordPressをダウンロード
+
 ```
 cd ~
 wget http://ja.wordpress.org/latest-ja.tar.gz
@@ -267,8 +287,11 @@ sudo chown apache:apache /var/www/html -R
 
 # WordPressを設定
 1. 以下のコマンドでApacheの起動
+
 ```sudo service httpd start```
+
 起動中の場合は再起動
+
 ```sudo service httpd restart```
 
 2. ブラウザでWebサーバーのパブリックIPまたはDNS名にアクセス
