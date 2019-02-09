@@ -303,3 +303,9 @@ sudo chown apache:apache /var/www/html -R
 
 4. WordPressの管理ページは/wp-admin/
 
+# 後片付け
+1. EC2インスタンスを停止
+2. NATゲートウェイを削除
+3. メインルートテーブルのルートからNATゲートウェイの設定を削除
+4. EIPを解放
+
