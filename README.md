@@ -309,3 +309,15 @@ sudo chown apache:apache /var/www/html -R
 3. メインルートテーブルのルートからNATゲートウェイの設定を削除
 4. EIPを解放
 
+# MySQLの代わりにMariaDBを利用する場合
+```
+sudo yum -y install mariadb mariadb-server
+mariadb -u root -p
+sudo systemctl start mariadb.service
+sudo systemctl enable mariadb.service
+sudo mysql -u root
+mysql> CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+mysql> grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd';
+mysql> exit
+```
+
