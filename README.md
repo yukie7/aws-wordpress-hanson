@@ -82,7 +82,7 @@
 # Apache HTTP Serverのインストール
 1. 以下のコマンドを入力してApacheをインストール
 
-```$ sudo sudo yum -y install httpd```
+```$ sudo yum -y install httpd```
 
 2. 以下のコマンドを入力してApacheを起動
 
