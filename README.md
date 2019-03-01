@@ -211,8 +211,8 @@ httpdの行にTCP *:80と表示されていることを確認
 6. Webサーバー経由でDBサーバーにSSH接続
 7. 以下のコマンドを入力してHTMLが取得できればNATゲートウェイが機能しHTTPで通信できていることが確認できる
 
-
-# DBサーバーにMySQLをインストール
+# DBサーバーにRDBMSをインストール
+## DBサーバーにMySQLをインストールする場合
 1. Webサーバー経由でDBサーバーにSSH接続
 2. 以下のコマンドでMySQLをインストール
 
@@ -257,6 +257,18 @@ mysql> grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd'
 ```
 
 8. DBサーバーからログアウト
+
+## MySQLの代わりにMariaDBを利用する場合
+```
+sudo yum -y install mariadb mariadb-server
+mariadb -u root -p
+sudo systemctl start mariadb.service
+sudo systemctl enable mariadb.service
+sudo mysql -u root
+mysql> CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+mysql> grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd';
+mysql> exit
+```
 
 # WebサーバーにWordPressをインストール
 1. Webサーバーにログイン
@@ -309,15 +321,9 @@ sudo chown apache:apache /var/www/html -R
 3. メインルートテーブルのルートからNATゲートウェイの設定を削除
 4. EIPを解放
 
-# MySQLの代わりにMariaDBを利用する場合
-```
-sudo yum -y install mariadb mariadb-server
-mariadb -u root -p
-sudo systemctl start mariadb.service
-sudo systemctl enable mariadb.service
-sudo mysql -u root
-mysql> CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-mysql> grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd';
-mysql> exit
-```
-
+# 再開作業
+1. ECインスタンス（WEBサーバー，DBサーバー）を再起動
+2. WEBサーバー経由でDBサーバーにSSHログイン
+3. 下記に従い，DBサーバーにあるwordpresデータベースのパブリックIP・DNSを再起動後のものに設定
+    - [WordPress移行後にアクセスすると前のサイトへ行かされてしまう場合](https://hacknote.jp/archives/38130/)
+    - 注意：URL内のhogehogeをwordpressに置き換えて考えること
