@@ -327,3 +327,8 @@ sudo chown apache:apache /var/www/html -R
 3. 下記に従い，DBサーバーにあるwordpresデータベースのパブリックIP・DNSを再起動後のものに設定
     - [WordPress移行後にアクセスすると前のサイトへ行かされてしまう場合](https://hacknote.jp/archives/38130/)
     - 注意：URL内のhogehogeをwordpressに置き換えて考えること
+
+# wordpress
+- 参考文献
+    - [WordPressのセキュリティ対策おすすめプラグイン6選](https://cybersecurity-jp.com/security-measures/22357#recommend)
+    - [Welcart GET STARTED](https://www.welcart.com/wc-flow/)
